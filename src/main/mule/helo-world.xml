@@ -33,6 +33,7 @@ output application/java
 			</ee:variables>
 		</ee:transform>
 		<logger level="INFO" doc:name="Print payload" doc:id="2e4e78e5-face-41b2-bf95-83c1e97ddbab" message="Payload:: #[payload]"/>
+		<logger level="INFO" doc:name="newly added logger" doc:id="d4dd07b5-2e22-4d67-af28-37bf7f898f83" message='#["newly added logger"]'/>
 		<logger level="INFO" doc:name="END" doc:id="fcc4ba4f-80b2-4f87-8cb8-28834fafe170" message="END"/>
 	</flow>
 </mule>
