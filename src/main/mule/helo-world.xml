@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="4ee21694-539b-4780-9818-ce25fda05efe" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="helo-worldFlow" doc:id="81e8f231-4fcb-42f6-8ed9-71af147c7e8d" >
+		<http:listener doc:name="Listener" doc:id="52767ce3-bff0-47bf-8387-053d542292c8" config-ref="HTTP_Listener_config" path="/test"/>
+		<logger level="INFO" doc:name="START" doc:id="fb4173b8-5fad-4764-ad1b-ec3962f96504" message="START"/>
+		<set-variable value="#[payload]" doc:name="set Original Payload" doc:id="a13de24c-2398-416c-8e01-beb71587935f" variableName="setOriginalPayload"/>
+		<set-payload doc:name="Set Payload" doc:id="d1389ad4-5d6f-4a82-9dcc-40aae5cf37a5" value='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;	"client_id": attributes.headers.client_id,&#10;	"client_secret": attributes.headers.client_secret,&#10;	"payload": vars.setOriginalPayload&#10;}]'/>
+		<ee:transform doc:name="Transform Message" doc:id="e7367e32-7427-41d2-bbda-a62e2f766e49" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+				<ee:set-attributes ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	"attributes.uriParams.empid" : vars.setOriginalPayload.id,
+	"attributes.queryParams.client_id": payload.client_id
+}]]></ee:set-attributes>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="setEmpId" ><![CDATA[vars.setOriginalPayload.id]]></ee:set-variable>
+				<ee:set-variable variableName="setDOB" ><![CDATA[attributes.queryParams.dob]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<logger level="INFO" doc:name="Print payload" doc:id="2e4e78e5-face-41b2-bf95-83c1e97ddbab" message="Payload:: #[payload]"/>
+		<logger level="INFO" doc:name="END" doc:id="fcc4ba4f-80b2-4f87-8cb8-28834fafe170" message="END"/>
+	</flow>
+</mule>
