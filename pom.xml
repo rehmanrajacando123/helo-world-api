@@ -36,6 +36,8 @@
 								<workers>1</workers>
 								<workerType>MICRO</workerType>
 								<properties>
+								    <anypoint.platform.client_id>1bbe3b6f73c14e939af428cbe366b7a2</anypoint.platform.client_id>
+                                    <anypoint.platform.client_secret>85c254f8f0374Eb8ad3B556633bB01c0</anypoint.platform.client_secret>
 									<http.port>8081</http.port>
 									<api.id>19282177</api.id>
 								</properties>
