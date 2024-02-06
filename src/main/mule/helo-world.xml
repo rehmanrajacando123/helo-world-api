@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
-	xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
-http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="4ee21694-539b-4780-9818-ce25fda05efe" >
 		<http:listener-connection host="0.0.0.0" port="8081" />
 	</http:listener-config>
+	<api-gateway:autodiscovery apiId="19282177" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="eaa48089-378f-4b30-b51c-05ce5ab9b2a4" flowRef="helo-worldFlow" />
 	<flow name="helo-worldFlow" doc:id="81e8f231-4fcb-42f6-8ed9-71af147c7e8d" >
 		<http:listener doc:name="Listener" doc:id="52767ce3-bff0-47bf-8387-053d542292c8" config-ref="HTTP_Listener_config" path="/test"/>
 		<logger level="INFO" doc:name="START" doc:id="fb4173b8-5fad-4764-ad1b-ec3962f96504" message="START"/>

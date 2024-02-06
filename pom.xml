@@ -37,6 +37,7 @@
 								<workerType>MICRO</workerType>
 								<properties>
 									<http.port>8081</http.port>
+									<api.id>19282177</api.id>
 								</properties>
 							</cloudHubDeployment>
 							<classifier>mule-application</classifier>
